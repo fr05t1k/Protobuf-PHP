@@ -36,7 +36,7 @@
       "tests/protos"
     ],
     "psr-0"   : {
-      "Tests/Unit": "tests/Unit"
+      "Tests\\Unit": "tests/Unit"
     }
   },
   "extra"       : {

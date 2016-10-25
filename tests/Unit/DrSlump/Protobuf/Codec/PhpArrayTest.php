@@ -2,6 +2,7 @@
 
 namespace Tests\Unit\DrSlumpProtobuf\Codec;
 
+use PHPUnit_Framework_TestCase;
 use DrSlump\Protobuf\Codec\PhpArray;
 use tests\Repeated;
 

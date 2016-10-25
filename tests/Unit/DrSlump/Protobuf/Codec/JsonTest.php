@@ -2,6 +2,7 @@
 
 namespace Tests\Unit\DrSlumpProtobuf\Codec;
 
+use PHPUnit_Framework_TestCase;
 use DrSlump\Protobuf\Codec\Json;
 use tests\AddressBook;
 use tests\Person;
@@ -113,7 +114,7 @@ class JsonTest extends PHPUnit_Framework_TestCase
 
     public function testSerializeAnnotatedSimpleMessage()
     {
-        $simple = new Tests\Annotated\Simple();
+        $simple = new Annotated\Simple();
         $simple->foo = 'FOO';
         $simple->bar = 1000;
         $json = (new Json())->encode($simple);
