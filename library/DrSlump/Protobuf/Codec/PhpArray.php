@@ -28,6 +28,7 @@ class PhpArray implements Protobuf\CodecInterface
 
     /**
      * @param \DrSlump\Protobuf\Message $message
+     *
      * @return array
      */
     public function encode(Protobuf\Message $message)
@@ -37,7 +38,8 @@ class PhpArray implements Protobuf\CodecInterface
 
     /**
      * @param \DrSlump\Protobuf\Message $message
-     * @param array $data
+     * @param array                     $data
+     *
      * @return \DrSlump\Protobuf\Message
      */
     public function decode(Protobuf\Message $message, $data)
@@ -50,7 +52,7 @@ class PhpArray implements Protobuf\CodecInterface
         $descriptor = Protobuf::getRegistry()->getDescriptor($message);
 
         $data = array();
-        foreach ($descriptor->getFields() as $tag=>$field) {
+        foreach ($descriptor->getFields() as $tag => $field) {
 
             $empty = !$message->_has($tag);
             if ($field->isRequired() && $empty) {
@@ -69,9 +71,9 @@ class PhpArray implements Protobuf\CodecInterface
             if ($field->isRepeated()) {
                 // Make sure the value is an array of values
                 $v = is_array($v) ? $v : array($v);
-                foreach ($v as $k=>$vv) {
+                foreach ($v as $k => $vv) {
                     // Skip nullified repeated values
-                    if (NULL === $vv) {
+                    if (null === $vv) {
                         continue;
                     }
                     $v[$k] = $this->filterValue($vv, $field);
@@ -91,12 +93,12 @@ class PhpArray implements Protobuf\CodecInterface
         // Get message descriptor
         $descriptor = Protobuf::getRegistry()->getDescriptor($message);
 
-        foreach ($data as $key=>$v) {
+        foreach ($data as $key => $v) {
 
             // Get the field by tag number or name
             $field = $this->useTagNumber
-                   ? $descriptor->getField($key)
-                   : $descriptor->getFieldByName($key);
+                ? $descriptor->getField($key)
+                : $descriptor->getFieldByName($key);
 
             // Unknown field found
             if (!$field) {
@@ -107,8 +109,8 @@ class PhpArray implements Protobuf\CodecInterface
 
             if ($field->isRepeated()) {
                 // Make sure the value is an array of values
-                $v = is_array($v) && is_int(key($v)) ? $v : array($v);
-                foreach ($v as $k=>$vv) {
+                $v = is_array($v) && (is_int(key($v)) || empty($v)) ? $v : array($v);
+                foreach ($v as $k => $vv) {
                     $v[$k] = $this->filterValue($vv, $field);
                 }
             } else {
